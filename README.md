@@ -4,7 +4,20 @@
 
 ![Held-out unemployment forecast](us-economic-cycle-forecasting/reports/figures/unemployment_forecast.png)
 
-## Project question
+## Current-data version: FRED monthly unemployment
+
+The new [latest_fred.py](latest_fred.py) pipeline retrieves the latest available UNRATE, CPIAUCSL, INDPRO and FEDFUNDS data. It compares ridge regression against persistence using the most recent 36 calendar months as the holdout and the preceding 24 months as validation. Results from the refreshed dataset are pending a successful download and run. The historical quarterly benchmark below is retained for reproducibility; its metrics do not describe the new model.
+
+```bash
+pip install -r us-economic-cycle-forecasting/requirements.txt
+python latest_fred.py
+# Or use a downloaded FRED CSV containing all four series:
+python latest_fred.py --csv fred.csv
+```
+
+Current-vintage series may be revised; this is not a release-vintage backtest. Other indicators are lagged one month relative to the current unemployment observation.
+
+## Historical benchmark: project question
 
 Can economic indicators available in quarter **t** help predict the U.S. unemployment rate in quarter **t+1**, better than simply assuming unemployment stays unchanged?
 
@@ -23,7 +36,7 @@ This is a **retrospective historical analysis**, not a live investment or econom
 - Target: next-quarter unemployment rate in percent. MAE is measured in **percentage points**, not percent accuracy.
 - The retrospective result reflects this particular split; do not interpret it as a guarantee for other periods.
 
-## What I built
+## Pipeline design
 
 1. Imported and validated a documented U.S. macroeconomic quarterly dataset.
 2. Engineered quarterly GDP, consumption, and investment growth; previous-quarter unemployment change; and current inflation, short-term interest rates, and unemployment.
@@ -78,7 +91,3 @@ These coefficients describe **associations** in the fitted model after standardi
 - **Statsmodels macrodata**: https://www.statsmodels.org/stable/datasets/generated/macrodata.html
 - Data source identified by statsmodels: **FRED (Federal Reserve Bank of St. Louis)**; see source notes for the component variables.
 - This repository includes the statsmodels historical dataset for offline reproducibility; dataset source is attributed here. The model, SQL, plots and documentation are an original analysis built for this portfolio.
-
-## Responsible portfolio use
-
-The pipeline was prepared with AI development assistance. Before describing it as independently developed in applications or interviews, review the design, run the tests, explain the temporal split, and make improvements you personally understand and can defend.
