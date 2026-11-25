@@ -1,0 +1,44 @@
+{
+  "data": "statsmodels macrodata; quarterly 1959Q1 through 2009Q3",
+  "task": "Predict next-quarter unemployment rate from current and prior-quarter indicators",
+  "train_period": "1959Q2 to 1998Q4",
+  "test_predictor_period": "1999Q1 to 2009Q2",
+  "train_rows": 159,
+  "test_rows": 42,
+  "tuned_ridge_alpha": 0.01,
+  "cv_trials": [
+    {
+      "alpha": 0.01,
+      "mean_cv_mae_pp": 0.1236
+    },
+    {
+      "alpha": 0.1,
+      "mean_cv_mae_pp": 0.1239
+    },
+    {
+      "alpha": 1.0,
+      "mean_cv_mae_pp": 0.1274
+    },
+    {
+      "alpha": 10.0,
+      "mean_cv_mae_pp": 0.1634
+    },
+    {
+      "alpha": 100.0,
+      "mean_cv_mae_pp": 0.4494
+    }
+  ],
+  "ridge": {
+    "mae_percentage_points": 0.1763,
+    "rmse_percentage_points": 0.2542
+  },
+  "persistence_baseline": {
+    "mae_percentage_points": 0.2405,
+    "rmse_percentage_points": 0.3674
+  },
+  "caveats": [
+    "Historic dataset ends in 2009 and is not a current live forecast.",
+    "Economic indicators can be revised after their original release; evaluation uses revised historical values.",
+    "Small sample and structural changes limit generalizability; associations are not causal."
+  ]
+}

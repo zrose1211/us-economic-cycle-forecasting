@@ -1,0 +1,1 @@
+"""Economic cycle modeling demonstration."""
