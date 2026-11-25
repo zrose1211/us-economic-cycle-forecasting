@@ -32,7 +32,8 @@ def prepare(raw):
 
 def run(source,out):
     d=prepare(pd.read_csv(source))
-    end=d.target_month.max();test_start=end-35;val_start=test_start-23
+    if d.empty: raise ValueError('No valid observations')
+    end=d.target_month.max();test_start=end-35;val_start=test_start-24
     train=d[d.target_month<val_start];val=d[(d.target_month>=val_start)&(d.target_month<test_start)];test=d[d.target_month>=test_start]
     if min(map(len,(train,val,test)))==0: raise ValueError('Insufficient chronological coverage')
     x=['UNRATE','unrate_change','inflation','production_growth','policy_rate']
@@ -46,6 +47,11 @@ def run(source,out):
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
     (out/'metrics.json').write_text(json.dumps(metrics,indent=2))
     p=test[['target_month','target','UNRATE']].copy();p['prediction']=pred;p.to_csv(out/'predictions.csv',index=False)
+    import matplotlib.pyplot as plt
+    p['date']=p.target_month.dt.to_timestamp()
+    ax=p.set_index('date')[['target','prediction','UNRATE']].rename(columns={'target':'Actual','prediction':'Selected model','UNRATE':'Persistence'}).plot(figsize=(9,4),title='Next-month unemployment: chronological holdout')
+    ax.set_ylabel('Unemployment rate (%)');ax.set_xlabel('Target month')
+    ax.figure.tight_layout();ax.figure.savefig(out/'forecast.png',dpi=150);plt.close(ax.figure)
     print(json.dumps(metrics,indent=2))
 
 if __name__=='__main__':
