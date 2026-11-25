@@ -23,14 +23,14 @@ This is a **retrospective historical analysis**, not a live investment or econom
 - Target: next-quarter unemployment rate in percent. MAE is measured in **percentage points**, not percent accuracy.
 - The retrospective result reflects this particular split; do not interpret it as a guarantee for other periods.
 
-## What I built
+## Pipeline design
 
 1. Imported and validated a documented U.S. macroeconomic quarterly dataset.
 2. Engineered quarterly GDP, consumption, and investment growth; previous-quarter unemployment change; and current inflation, short-term interest rates, and unemployment.
 3. Created an expanding-window validation process that never trains on future observations.
 4. Compared tuned ridge regression against a strong, interpretable persistence baseline on a chronological holdout.
 5. Exported model metrics, out-of-time predictions, a SQLite database, three runnable SQL analysis results, and publication-ready visualizations.
-6. Added automated tests and GitHub Actions for reproducibility.
+6. Added automated tests for reproducibility.
 
 ## Reproduce locally
 
@@ -56,7 +56,6 @@ reports/macro_analysis.sqlite  SQLite database with raw and engineered tables
 reports/sql_result_*.csv       Saved results of the SQL queries
 reports/figures/              Forecast and coefficient charts
 tests/test_pipeline.py         Temporal integrity and correctness tests
-.github/workflows/test.yml     CI checks
 ```
 
 ## Model interpretation
@@ -77,7 +76,3 @@ These coefficients describe **associations** in the fitted model after standardi
 - **Statsmodels macrodata**: https://www.statsmodels.org/stable/datasets/generated/macrodata.html
 - Data source identified by statsmodels: **FRED (Federal Reserve Bank of St. Louis)**; see source notes for the component variables.
 - This repository includes the statsmodels historical dataset for offline reproducibility; dataset source is attributed here. The model, SQL, plots and documentation are an original analysis built for this portfolio.
-
-## Responsible portfolio use
-
-The pipeline was prepared with AI development assistance. Before describing it as independently developed in applications or interviews, review the design, run the tests, explain the temporal split, and make improvements you personally understand and can defend.
