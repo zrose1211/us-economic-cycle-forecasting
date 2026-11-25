@@ -1,5 +1,7 @@
 # U.S. Economic Cycle Forecasting
 
+[Python](https://www.python.org/) · [Automated checks](https://github.com/zrose1211/us-economic-cycle-forecasting/actions) · [Source files](https://github.com/zrose1211/us-economic-cycle-forecasting/tree/main)
+
 **An end-to-end forecasting case study with Python, SQL, chronological validation, and honest baseline comparisons.**
 
 ![Held-out unemployment forecast](reports/figures/unemployment_forecast.png)
@@ -23,7 +25,7 @@ Can economic indicators available in quarter **t** help predict the U.S. unemplo
 
 This is a **retrospective historical analysis**, not a live investment or economic forecasting tool. Data cover **1959 Q1 through 2009 Q3**. The example uses revised historical data, which may differ from the values known at the time.
 
-## Historical test-set results
+## Historical quarterly test-set results
 
 | Method | Test MAE (percentage points) | Test RMSE (percentage points) |
 |---|---:|---:|
@@ -45,7 +47,7 @@ This is a **retrospective historical analysis**, not a live investment or econom
 5. Exported model metrics, out-of-time predictions, a SQLite database, three runnable SQL analysis results, and publication-ready visualizations.
 6. Added automated tests for reproducibility.
 
-## Reproduce locally
+## Reproduce the historical benchmark locally
 
 ```bash
 python -m venv .venv
@@ -82,10 +84,14 @@ These coefficients describe **associations** in the fitted model after standardi
 - The dataset is historical (ending 2009), small (203 quarterly rows), and subject to subsequent economic revisions. It is **not real-time-vintage data**, so real-world performance could be lower.
 - The model is trained on one historical period and tested during a different regime including the financial crisis; larger rolling-origin evaluations and newer data would be worthwhile.
 - This is an analytical demonstration; not a trading strategy, econometric causal claim, or business recommendation.
-- Next step: rebuild with current Federal Reserve data and release-vintage data (e.g. ALFRED), then report several rolling test windows and data availability lags.
+- The current FRED pipeline is described above. A future extension is a true release-vintage backtest using ALFRED.
 
 ## Sources and provenance
 
 - **Statsmodels macrodata**: https://www.statsmodels.org/stable/datasets/generated/macrodata.html
 - Data source identified by statsmodels: **FRED (Federal Reserve Bank of St. Louis)**; see source notes for the component variables.
 - This repository includes the statsmodels historical dataset for offline reproducibility; dataset source is attributed here. The model, SQL, plots and documentation are an original analysis built for this portfolio.
+
+## Automated evaluation
+
+The [Portfolio checks workflow](https://github.com/zrose1211/us-economic-cycle-forecasting/actions/workflows/checks.yml) runs the test suite on GitHub Actions. Select **Run workflow** to regenerate the evaluation outputs; download the `evaluation-results` artifact from a successful run. The refresh uses external data sources; availability and results depend on the downloaded snapshot. The workflow does not overwrite previously published historical metrics.
