@@ -2,6 +2,10 @@ name: Portfolio checks
 on:
   push:
     branches: [main]
+    paths:
+      - '**.py'
+      - 'requirements.txt'
+      - '.github/workflows/checks.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,7 +26,6 @@ jobs:
       - run: python -m pytest -q
   refresh:
     needs: test
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
