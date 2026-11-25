@@ -2,14 +2,14 @@
 
 **An end-to-end forecasting case study with Python, SQL, chronological validation, and honest baseline comparisons.**
 
-![Held-out unemployment forecast](us-economic-cycle-forecasting/reports/figures/unemployment_forecast.png)
+![Held-out unemployment forecast](reports/figures/unemployment_forecast.png)
 
 ## Current-data version: FRED monthly unemployment
 
 The new [latest_fred.py](latest_fred.py) pipeline retrieves the latest available UNRATE, CPIAUCSL, INDPRO and FEDFUNDS data. It compares ridge regression against persistence using the most recent 36 calendar months as the holdout and the preceding 24 months as validation. Results from the refreshed dataset are pending a successful download and run. The historical quarterly benchmark below is retained for reproducibility; its metrics do not describe the new model.
 
 ```bash
-pip install -r us-economic-cycle-forecasting/requirements.txt
+pip install -r requirements.txt
 python latest_fred.py
 # Or use a downloaded FRED CSV containing all four series:
 python latest_fred.py --csv fred.csv
@@ -23,7 +23,7 @@ Can economic indicators available in quarter **t** help predict the U.S. unemplo
 
 This is a **retrospective historical analysis**, not a live investment or economic forecasting tool. Data cover **1959 Q1 through 2009 Q3**. The example uses revised historical data, which may differ from the values known at the time.
 
-## Test-set results
+## Historical test-set results
 
 | Method | Test MAE (percentage points) | Test RMSE (percentage points) |
 |---|---:|---:|
@@ -50,7 +50,6 @@ This is a **retrospective historical analysis**, not a live investment or econom
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-cd us-economic-cycle-forecasting
 pip install -r requirements.txt
 python -m pytest -q
 python -m src.pipeline
@@ -61,7 +60,6 @@ No API keys or external data downloads are required. The historical CSV is inclu
 ## Repo map
 
 ```text
-us-economic-cycle-forecasting/  (project directory)
 src/pipeline.py                 Features, model selection, evaluation, plots and SQLite
 sql/analysis.sql               Three analytical queries
 data/us_macro_1959_2009.csv   Original historical quarterly values
@@ -75,7 +73,7 @@ tests/test_pipeline.py         Temporal integrity and correctness tests
 
 ## Model interpretation
 
-![Standardized ridge coefficients](us-economic-cycle-forecasting/reports/figures/standardized_coefficients.png)
+![Standardized ridge coefficients](reports/figures/standardized_coefficients.png)
 
 These coefficients describe **associations** in the fitted model after standardizing the inputs. They **do not establish causality** or policy effects. Unemployment is a persistent series, so the current unemployment rate is a useful forecasting feature, and the persistence baseline is important.
 
