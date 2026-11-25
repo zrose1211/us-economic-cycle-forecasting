@@ -8,7 +8,7 @@
 
 ## Current-data version: FRED monthly unemployment
 
-The new [latest_fred.py](latest_fred.py) pipeline retrieves the latest available UNRATE, CPIAUCSL, INDPRO and FEDFUNDS data. It compares ridge regression against persistence using the most recent 36 calendar months as the holdout and the preceding 24 months as validation. Results from the refreshed dataset are pending a successful download and run. The historical quarterly benchmark below is retained for reproducibility; its metrics do not describe the new model.
+The new [latest_fred.py](latest_fred.py) pipeline retrieves the latest available UNRATE, CPIAUCSL, INDPRO and FEDFUNDS data. It compares ridge regression against persistence using the most recent 36 calendar months as the holdout and the preceding 24 months as validation. The November 25, 2026 evaluation completed successfully. The historical quarterly benchmark below is retained for reproducibility; its metrics do not describe the new model.
 
 ```bash
 pip install -r requirements.txt
@@ -18,6 +18,12 @@ python latest_fred.py --csv fred.csv
 ```
 
 Current-vintage series may be revised; this is not a release-vintage backtest. Other indicators are lagged one month relative to the current unemployment observation.
+
+## Current FRED results (through October 2026)
+
+The persistence baseline had the lowest validation MAE and was retained rather than selecting a worse ridge model. On 33 available holdout observations (November 2023–October 2026), MAE was **0.0848 percentage points** and RMSE was **0.1101 percentage points**. The ridge candidates did not beat persistence on validation; this is a useful negative result rather than evidence of improved ML accuracy. Missing observations reduced coverage below the 36-calendar-month window.
+
+[Metrics JSON](reports_current/metrics.json) · [Evaluation run and downloadable predictions/chart](https://github.com/zrose1211/us-economic-cycle-forecasting/actions/runs/45696924839)
 
 ## Historical benchmark: project question
 

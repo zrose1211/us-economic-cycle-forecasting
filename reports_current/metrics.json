@@ -1,0 +1,17 @@
+{
+  "source": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=UNRATE,CPIAUCSL,INDPRO,FEDFUNDS",
+  "last_target_month": "2026-10",
+  "test_start": "2023-11",
+  "selected": "persistence",
+  "validation_mae": {
+    "1": 0.2935439783285865,
+    "10": 0.35077567522487535,
+    "100": 0.7464586890680142,
+    "persistence": 0.10833333333333338,
+    "0.1": 0.2878036370969208
+  },
+  "test_mae": 0.08484848484848496,
+  "baseline_mae": 0.08484848484848496,
+  "test_rmse": 0.11009637651263615,
+  "test_rows": 33
+}
